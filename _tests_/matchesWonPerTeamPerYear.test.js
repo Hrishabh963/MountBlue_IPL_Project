@@ -1,32 +1,49 @@
-const countTeamWins = require('../src/server/matchesWonPerTeamPerYear');
+const countMatchesWonByTeamsPerYear = require('../src/server/matchesWonPerTeamPerYear');
 
-test('In year 2008 KKR should have won 6 matches ', () => {
-    countTeamWins((err, data) => {
-        expect(data[2008]['Kolkata Knight Riders']).toBe(6);
-    })
-})
-
-test('Year 2010 data set should match the generated data set ', () => {
-    const matchesWonIn2010 = {
-        "Kolkata Knight Riders": 7,
-        "Mumbai Indians": 11,
-        "Delhi Daredevils": 7,
-        "Deccan Chargers": 8,
-        "Royal Challengers Bangalore": 8,
-        "Chennai Super Kings": 9,
-        "Rajasthan Royals": 6,
-        "Kings XI Punjab": 4
-
+const testDataSet = [{
+        "season": 2008,
+        "winner": "Kings XI Punjab",
+    },
+    {
+        "season": 2008,
+        "winner": "Delhi Daredevils"
+    },
+    {
+        "season": 2017,
+        "winner": "Mumbai Indians",
+    },
+    {
+        "season": 2011,
+        "winner": "Kolkata Knight Riders",
+    },
+    {
+        "season": 2017,
+        "winner": "Mumbai Indians",
     }
-    countTeamWins((err, data) => {
-        expect(data[2010]).toStrictEqual(matchesWonIn2010);
-    })
+]
+
+const testDataResult = {
+    '2008': { 'Delhi Daredevils': 1, 'Kings XI Punjab': 1 },
+    '2011': { 'Kolkata Knight Riders': 1 },
+    '2017': { 'Mumbai Indians': 2 }
+}
+
+test('For year 2008 Delhi Darevils should win 1 ', () => {
+    const resultsGenerated = countMatchesWonByTeamsPerYear(testDataSet);
+    expect(resultsGenerated[2008]['Delhi Daredevils']).toBe(1);
 })
 
+test('For year 2017 Mumbai Indians should win 2 ', () => {
+    const resultsGenerated = countMatchesWonByTeamsPerYear(testDataSet);
+    expect(resultsGenerated[2017]['Mumbai Indians']).toBe(2);
+})
 
-test('Matches won by RCB in 2009 and 2017 should be 9 and 3 ', () => {
-    countTeamWins((err, data) => {
-        expect(data[2009]['Royal Challengers Bangalore']).toBe(9);
-        expect(data[2017]['Royal Challengers Bangalore']).toBe(3);
-    })
+test('For year 2011 Mumbai Indians should be undefined', () => {
+    const resultsGenerated = countMatchesWonByTeamsPerYear(testDataSet);
+    expect(resultsGenerated[2011]['Mumbai Indians']).toBe(undefined);
+})
+
+test('Result generated should match testDataResult', () => {
+    const resultsGenerated = countMatchesWonByTeamsPerYear(testDataSet);
+    expect(resultsGenerated).toStrictEqual(testDataResult);
 })

@@ -1,33 +1,43 @@
-const matchesPerYear =
-    require('../src/server/matchesPerYear').numberOfMatchesPerYear;
+const matchesPerYear = require('../src/server/matchesPerYear');
 
-test('2008 should have 58 matches', () => {
-    matchesPerYear((err, data) => {
-        expect(data[2008]).toBe(58);
-    });
-});
+const testDataSet = [{
+        "season": 2008,
+        "team1": "Sunrisers Hyderabad",
+        "team2": "Royal Challengers Bangalore",
+    },
+    {
+        "season": 2017,
+        "team1": "Mumbai Indians",
+        "team2": "Rising Pune Supergiant",
+    },
+    {
+        "season": 2017,
+        "team1": "Gujarat Lions",
+        "team2": "Kolkata Knight Riders",
+    },
+    {
+        "season": 2009,
+        "team1": "Rising Pune Supergiant",
+        "team2": "Kings XI Punjab",
+    }
+]
 
-test('2009 should have 57 matches and 2011 should have 73 matches', () => {
-    matchesPerYear((err, data) => {
-        expect(data[2009]).toBe(57);
-        expect(data[2011]).toBe(73);
-    });
-});
+const testDataResult = {
+    '2008': 1,
+    '2009': 1,
+    '2017': 2
+};
 
-test('data generated should match the test data', () => {
-    const testData = {
-        2008: 58,
-        2009: 57,
-        2010: 60,
-        2011: 73,
-        2012: 74,
-        2013: 76,
-        2014: 60,
-        2015: 59,
-        2016: 60,
-        2017: 59,
-    };
-    matchesPerYear((err, data) => {
-        expect(data).toStrictEqual(testData);
-    });
-});
+test('Result generated should match the testDataResult ', () => {
+    expect(matchesPerYear(testDataSet)).toStrictEqual(testDataResult);
+})
+
+test('Year 2017 should be 2 matches', () => {
+    const generatedResult = matchesPerYear(testDataSet);
+    expect(generatedResult[2017]).toBe(2)
+})
+
+test('Year 2010 should be undefined', () => {
+    const generatedResult = matchesPerYear(testDataSet);
+    expect(generatedResult[2010]).toBe(undefined)
+})
