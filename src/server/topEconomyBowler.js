@@ -23,7 +23,7 @@ function topEconomyBowlers(matchData, deliveriesData) {
 
   let totalPlayerEconomy = Object.entries(bowlerData).map(([name, stats]) => {
     const { total_runs, total_bowls } = stats;
-    const average = total_runs / total_bowls;
+    const average = total_runs / (total_bowls / 6);
     return { player_Name: name, economy_rate: average };
   });
 

@@ -4,6 +4,7 @@ const writeFileData = require('./writeFile');
 const countMatchesWonByTeamsPerYear = require('./matchesWonPerTeamPerYear');
 const countExtraRunsPerTeam = require('./extraRunsPerTeamIn2016');
 const topEconomyBowlers = require('./topEconomyBowler');
+const tossWinMatchWinCount = require('./tossWinMatchWin');
 
 function main() {
   readFileData('matches.csv', (error, matches) => {
@@ -15,6 +16,9 @@ function main() {
 
       const matchesWonPerTeamPerYear = countMatchesWonByTeamsPerYear(matches);
       writeFileData(matchesWonPerTeamPerYear, 'matchesWonPerTeamPerYear');
+
+      const tossWinMatchWin = tossWinMatchWinCount(matches);
+      writeFileData(tossWinMatchWin, 'tossWinMatchWin');
 
       readFileData('deliveries.csv', (error, deliveries) => {
         if (error) {
