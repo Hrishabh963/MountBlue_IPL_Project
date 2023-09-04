@@ -1,17 +1,18 @@
 const topEconomyBowlers = require('../src/server/topEconomyBowler');
 
 const testData = [
-    { match_id: '1', inning: '1', bowler: 'R Ashwin', total_runs: '3' },
-    { match_id: '1', inning: '1', bowler: 'V Kohli', total_runs: '2' },
-    { match_id: '1', inning: '1', bowler: 'J Yadav', total_runs: '1' },
-    { match_id: '1', inning: '1', bowler: 'S Nadeem', total_runs: '3' },
-    { match_id: '1', inning: '2', bowler: 'NA Starc', total_runs: '1' },
-    { match_id: '1', inning: '2', bowler: 'M de Lange', total_runs: '4' },
-    { match_id: '1', inning: '2', bowler: 'Z Khan', total_runs: '5' },
-    { match_id: '1', inning: '2', bowler: 'RN ten', total_runs: '4' },
-    { match_id: '1', inning: '2', bowler: 'MC Henriques', total_runs: '1' },
-    { match_id: '1', inning: '2', bowler: 'MC Henriques', total_runs: '1' },
+    { match_id: '1', inning: '1', bowler: 'R Ashwin', batsman_runs: '3', wide_runs: '0', noball_runs: '0' },
+    { match_id: '1', inning: '1', bowler: 'V Kohli', batsman_runs: '2', wide_runs: '0', noball_runs: '0' },
+    { match_id: '1', inning: '1', bowler: 'J Yadav', batsman_runs: '1', wide_runs: '0', noball_runs: '0' },
+    { match_id: '1', inning: '1', bowler: 'S Nadeem', batsman_runs: '3', wide_runs: '0', noball_runs: '0' },
+    { match_id: '1', inning: '2', bowler: 'NA Starc', batsman_runs: '1', wide_runs: '1', noball_runs: '0' },
+    { match_id: '1', inning: '2', bowler: 'M de Lange', batsman_runs: '4', wide_runs: '2', noball_runs: '0' },
+    { match_id: '1', inning: '2', bowler: 'Z Khan', batsman_runs: '5', wide_runs: '0', noball_runs: '0' },
+    { match_id: '1', inning: '2', bowler: 'RN ten', batsman_runs: '4', wide_runs: '1', noball_runs: '0' },
+    { match_id: '1', inning: '2', bowler: 'MC Henriques', batsman_runs: '1', wide_runs: '0', noball_runs: '0' },
+    { match_id: '1', inning: '2', bowler: 'MC Henriques', batsman_runs: '1', wide_runs: '0', noball_runs: '4' },
 ];
+
 
 const testMatchData = [{
     id: 1,
@@ -24,20 +25,20 @@ const testMatchData = [{
 }, ];
 
 const testResult = {
-    'J Yadav': 6,
-    'NA Starc': 6,
-    'MC Henriques': 6,
-    'V Kohli': 12.000,
-    'R Ashwin': 18,
-    'S Nadeem': 18,
-    'M de Lange': 24,
-    'RN ten': 24,
-    'Z Khan': 30,
-};
+    'J Yadav': '6.000',
+    'V Kohli': '12.000',
+    'NA Starc': '12.000',
+    'R Ashwin': '18.000',
+    'S Nadeem': '18.000',
+    'MC Henriques': '18.000',
+    'Z Khan': '30.000',
+    'RN ten': '30.000',
+    'M de Lange': '36.000'
+}
 
 test('Virat Kohli should have economy rate of 12 ', () => {
     const resultGenerated = topEconomyBowlers(testMatchData, testData);
-    expect(resultGenerated['V Kohli']).toEqual(12);
+    expect(parseInt(resultGenerated['V Kohli'])).toEqual(12);
 });
 
 test('J Yadav should be top 1 ', () => {

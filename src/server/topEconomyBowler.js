@@ -9,13 +9,17 @@ function topEconomyBowlers(matchData, deliveriesData) {
     for (let run in runData) {
       if (!bowlerData[runData[run]['bowler']]) {
         bowlerData[runData[run]['bowler']] = {
-          total_runs: parseInt(runData[run]['total_runs']),
+          total_runs:
+            parseInt(runData[run]['wide_runs']) +
+            parseInt(runData[run]['noball_runs']) +
+            parseInt(runData[run]['batsman_runs']),
           total_bowls: 1,
         };
       } else if (bowlerData[runData[run]['bowler']]) {
-        bowlerData[runData[run]['bowler']]['total_runs'] += parseInt(
-          runData[run]['total_runs'],
-        );
+        bowlerData[runData[run]['bowler']]['total_runs'] +=
+          parseInt(runData[run]['wide_runs']) +
+          parseInt(runData[run]['noball_runs']) +
+          parseInt(runData[run]['batsman_runs']);
         bowlerData[runData[run]['bowler']]['total_bowls'] += 1;
       }
     }
@@ -23,7 +27,7 @@ function topEconomyBowlers(matchData, deliveriesData) {
 
   let totalPlayerEconomy = Object.entries(bowlerData).map(([name, stats]) => {
     const { total_runs, total_bowls } = stats;
-    const average = total_runs / (total_bowls / 6);
+    const average = (total_runs / (total_bowls / 6)).toFixed(3);
     return { player_Name: name, economy_rate: average };
   });
 
