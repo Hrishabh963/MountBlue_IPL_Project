@@ -6,6 +6,7 @@ const countExtraRunsPerTeam = require('./extraRunsPerTeamIn2016');
 const topEconomyBowlers = require('./topEconomyBowler');
 const tossWinMatchWinCount = require('./tossWinMatchWin');
 const findPlayerOfMatch = require('./playerOfMatchPerSeason');
+const findStrikeRate = require('./strikeRateEachSeason');
 
 function main() {
   readFileData('matches.csv', (error, matches) => {
@@ -33,6 +34,9 @@ function main() {
 
           const topTenEconomyBowlers = topEconomyBowlers(matches, deliveries);
           writeFileData(topTenEconomyBowlers, 'topTenEconomyBowlers');
+
+          const strikeRates = findStrikeRate(matches, deliveries);
+          writeFileData(strikeRates, 'strikeRatesForEachSeason');
         }
       });
     }
