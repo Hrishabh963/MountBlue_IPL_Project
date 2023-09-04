@@ -5,6 +5,7 @@ const countMatchesWonByTeamsPerYear = require('./matchesWonPerTeamPerYear');
 const countExtraRunsPerTeam = require('./extraRunsPerTeamIn2016');
 const topEconomyBowlers = require('./topEconomyBowler');
 const tossWinMatchWinCount = require('./tossWinMatchWin');
+const findPlayerOfMatch = require('./playerOfMatchPerSeason');
 
 function main() {
   readFileData('matches.csv', (error, matches) => {
@@ -19,6 +20,9 @@ function main() {
 
       const tossWinMatchWin = tossWinMatchWinCount(matches);
       writeFileData(tossWinMatchWin, 'tossWinMatchWin');
+
+      const playerOfMatchPerSeason = findPlayerOfMatch(matches);
+      writeFileData(playerOfMatchPerSeason, 'playerOfMatchPerSeason');
 
       readFileData('deliveries.csv', (error, deliveries) => {
         if (error) {
