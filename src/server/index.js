@@ -49,9 +49,11 @@ function main() {
                     const strikeRates = findStrikeRate(matches, deliveries);
                     writeFileData(strikeRates, 'strikeRatesForEachSeason');
 
+                    //Function to get the data of the player with highest dismissals by same bowler
                     const playerWithHighestDismissals = countPlayerDismissed(deliveries);
                     writeFileData(playerWithHighestDismissals, 'playerDismissedByAnother')
 
+                    //Function to get best economy bowler for super overs
                     const BestSuperOverBowler = bestSuperOverEconomyBowler(deliveries)
                     writeFileData(BestSuperOverBowler, 'bestSuperOverEconomy');
                 }
