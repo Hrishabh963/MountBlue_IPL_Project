@@ -44,7 +44,7 @@ function countPlayerDismissed(deliveriesData) {
         }
     }
 
-    //Sort and filtret to get the highest dismissal counts only
+    //Sort and filter to get the highest dismissal counts only
     let sortedHighestNumberedDismissals = highestNumberedPlayerDismissals.sort((a, b) => b.count - a.count)
     const highestDismissal = sortedHighestNumberedDismissals[0].count
     sortedHighestNumberedDismissals = sortedHighestNumberedDismissals.filter((playerData) => playerData.count === highestDismissal);
