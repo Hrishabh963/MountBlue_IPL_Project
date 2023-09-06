@@ -1,6 +1,6 @@
 function bestSuperOverEconomyBowler(deliveresData) {
     const superOverBowlerData = {};
-    const superOverDeliveries = deliveresData.filter(deliveries => deliveries['is_super_over'] == '1');
+    const superOverDeliveries = deliveresData.filter(deliveries => deliveries['is_super_over'] === '1');
 
     //Iterate over deliveries filtered by super overs
     superOverDeliveries.forEach(deliveries => {
@@ -23,8 +23,15 @@ function bestSuperOverEconomyBowler(deliveresData) {
         return { bowler: name, economy_rate: economyRate }
     })
 
-    //Sort the data by increasing order of economy rate and splice to get the lowest economy
-    superOverEconomy = superOverEconomy.sort((a, b) => a.economy_rate - b.economy_rate).splice(0, 1);
-    return superOverEconomy[0];
+    //Sort the data by increasing order of economy rate and store the best economy rate bowler/bowlers in a data structure
+    superOverEconomy = superOverEconomy.sort((a, b) => a.economy_rate - b.economy_rate);
+    const highestEconomyRate = superOverEconomy[0].economy_rate;
+    const filteredSuperOverEconomy = superOverEconomy.filter(bowlerData => bowlerData.economy_rate === highestEconomyRate);
+    const bestSuperOverEconomy = {};
+    for (const bowlerData of filteredSuperOverEconomy) {
+        bestSuperOverEconomy[bowlerData.bowler] = bowlerData.economy_rate;
+    }
+    return bestSuperOverEconomy;
 }
+
 module.exports = bestSuperOverEconomyBowler;

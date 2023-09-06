@@ -51,14 +51,10 @@ const testData = [{
     },
 ];
 
-const testDataResult = { bowler: 'V Kohli', economy_rate: '12.000' };
+const testDataResult = { 'V Kohli': '12.000' };
 
-test('Virat Kohli should be the best bowler ', () => {
+test('Test data should match result ', () => {
     const resultGenerated = bestSuperOverEconomyBowler(testData);
-    expect(resultGenerated['bowler']).toEqual(testDataResult['bowler']);
-})
-
-test('Virat Kohli should have economy rate of 12  ', () => {
-    const resultGenerated = bestSuperOverEconomyBowler(testData);
-    expect(resultGenerated['economy_rate']).toEqual(testDataResult['economy_rate']);
+    expect(resultGenerated).toEqual(testDataResult);
+    expect(resultGenerated['V Kohli']).toEqual(testDataResult['V Kohli']);
 })

@@ -14,22 +14,24 @@ function findPlayerOfMatch(matchData) {
         }
     });
 
-    //For each year,reduce the player_of_match count to keep the highest count
-    for (let year in playerOfMatchCount) {
-        const maxPlayer = Object.keys(playerOfMatchCount[year]).reduce(
-            (max, player) => {
-                if (playerOfMatchCount[year][player] > playerOfMatchCount[year][max]) {
-                    return player;
-                } else return max;
-            },
-        );
-
-        //Dump the data into an object and store it for its respective season
-        const newPlayerData = {};
-        newPlayerData[maxPlayer] = playerOfMatchCount[year][maxPlayer];
-        playerOfMatchCount[year] = newPlayerData;
+    //Cycle through the object to get all players with highest count per season
+    let highestPlayerOfMatchPerSeason = {};
+    for (const year in playerOfMatchCount) {
+        const yearData = playerOfMatchCount[year];
+        let highestCount = 0;
+        let highestPlayerOfMatch = [];
+        for (const player in yearData) {
+            const playerCount = yearData[player];
+            if (playerCount > highestCount) {
+                highestCount = playerCount;
+                highestPlayerOfMatch = [{ player: player, player_of_match: playerCount }];
+            } else if (playerCount === highestCount) {
+                highestPlayerOfMatch.push({ player: player, player_of_match: playerCount });
+            }
+        }
+        highestPlayerOfMatchPerSeason[year] = highestPlayerOfMatch;
     }
-    return playerOfMatchCount;
+    return highestPlayerOfMatchPerSeason;
 }
 
 module.exports = findPlayerOfMatch;

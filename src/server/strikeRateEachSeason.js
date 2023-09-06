@@ -4,27 +4,27 @@ function findStrikeRate(matchData, deliveriesData) {
     //For each match get its match ID
     matchData.forEach((match) => {
         const { id, season } = match;
-        const runData = deliveriesData.filter(
+        const filteredDeliveryData = deliveriesData.filter(
             (deliveries) => deliveries['match_id'] == id,
         );
 
         //Run for each for the filtered delivery data
-        runData.forEach((run) => {
+        filteredDeliveryData.forEach((delivery) => {
 
             //Store the stats of the batsman in a data structure, grouped by season
             if (!strikeDataPerBatsman[season]) {
                 strikeDataPerBatsman[season] = {};
             }
-            if (!strikeDataPerBatsman[season][run['batsman']]) {
-                strikeDataPerBatsman[season][run['batsman']] = {
-                    total_runs: parseInt(run['batsman_runs']),
+            if (!strikeDataPerBatsman[season][delivery['batsman']]) {
+                strikeDataPerBatsman[season][delivery['batsman']] = {
+                    total_runs: parseInt(delivery['batsman_runs']),
                     total_balls: 1,
                 };
             } else {
-                strikeDataPerBatsman[season][run['batsman']]['total_runs'] += parseInt(
-                    run['batsman_runs'],
+                strikeDataPerBatsman[season][delivery['batsman']]['total_runs'] += parseInt(
+                    delivery['batsman_runs'],
                 );
-                strikeDataPerBatsman[season][run['batsman']]['total_balls'] += 1;
+                strikeDataPerBatsman[season][delivery['batsman']]['total_balls'] += 1;
             }
         });
     });

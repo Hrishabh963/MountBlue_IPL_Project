@@ -7,7 +7,7 @@ function countPlayerDismissed(deliveriesData) {
         const { bowler, player_dismissed, dismissal_kind } = deliveries;
 
         //Keep track of dismissal counts with same batsman and bowler
-        if (dismissal_kind == 'bowled' || dismissal_kind == 'caught' || dismissal_kind == 'caught and bowled' || dismissal_kind == 'lbw') {
+        if (dismissal_kind === 'bowled' || dismissal_kind === 'caught' || dismissal_kind === 'caught and bowled' || dismissal_kind == 'lbw') {
             if (!playerDismissCount[player_dismissed]) {
                 playerDismissCount[player_dismissed] = {};
             }
@@ -21,18 +21,34 @@ function countPlayerDismissed(deliveriesData) {
 
     //Get the player with highest dismissals;
     let highestCount = 0;
-    let highestNumberedPlayerDismissals = {};
+    let highestNumberedPlayerDismissals = [];
     for (const batsman in playerDismissCount) {
         for (const bowler in playerDismissCount[batsman]) {
-            const count = playerDismissCount[batsman][bowler];
-            if (count > highestCount) {
-                highestCount = count;
-                highestNumberedPlayerDismissals['name'] = batsman;
-                highestNumberedPlayerDismissals['bowler'] = bowler;
-                highestNumberedPlayerDismissals['count'] = count;
+            const dissmissCount = playerDismissCount[batsman][bowler];
+            if (dissmissCount > highestCount) {
+                highestCount = dissmissCount;
+                const playerDissmissal = {
+                    batsman: batsman,
+                    bowler: bowler,
+                    count: dissmissCount
+                };
+                highestNumberedPlayerDismissals.push(playerDissmissal);
+            } else if (dissmissCount === highestCount) {
+                const playerDissmissal = {
+                    batsman: batsman,
+                    bowler: bowler,
+                    count: dissmissCount
+                };
+                highestNumberedPlayerDismissals.push(playerDissmissal)
             }
         }
     }
-    return highestNumberedPlayerDismissals
+
+    //Sort and filtret to get the highest dismissal counts only
+    let sortedHighestNumberedDismissals = highestNumberedPlayerDismissals.sort((a, b) => b.count - a.count)
+    const highestDismissal = sortedHighestNumberedDismissals[0].count
+    sortedHighestNumberedDismissals = sortedHighestNumberedDismissals.filter((playerData) => playerData.count === highestDismissal);
+    return sortedHighestNumberedDismissals
 }
+
 module.exports = countPlayerDismissed;

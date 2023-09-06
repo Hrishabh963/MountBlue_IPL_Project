@@ -3,29 +3,29 @@ function topEconomyBowlers(matchData, deliveriesData) {
     let matches = matchData.filter((match) => match['season'] == 2015);
 
     //Run for in loop for matches of year 2015
-    for (let match in matches) {
-        const matchId = matches[match]['id'];
-        let runData = deliveriesData.filter(
-            (deliveries) => deliveries['match_id'] == matchId,
+    for (let match of matches) {
+        const matchId = match['id'];
+        let filteredDeliveryData = deliveriesData.filter(
+            (deliveries) => deliveries['match_id'] === matchId,
         );
 
         //Run for in loop for data filtered by match id
-        for (let run in runData) {
+        for (let delivery of filteredDeliveryData) {
 
             //For each bowler store its stats in a data structure
-            if (!bowlerData[runData[run]['bowler']]) {
-                bowlerData[runData[run]['bowler']] = {
-                    total_runs: parseInt(runData[run]['wide_runs']) +
-                        parseInt(runData[run]['noball_runs']) +
-                        parseInt(runData[run]['batsman_runs']),
+            if (!bowlerData[delivery['bowler']]) {
+                bowlerData[delivery['bowler']] = {
+                    total_runs: parseInt(delivery['wide_runs']) +
+                        parseInt(delivery['noball_runs']) +
+                        parseInt(delivery['batsman_runs']),
                     total_bowls: 1,
                 };
-            } else if (bowlerData[runData[run]['bowler']]) {
-                bowlerData[runData[run]['bowler']]['total_runs'] +=
-                    parseInt(runData[run]['wide_runs']) +
-                    parseInt(runData[run]['noball_runs']) +
-                    parseInt(runData[run]['batsman_runs']);
-                bowlerData[runData[run]['bowler']]['total_bowls'] += 1;
+            } else if (bowlerData[delivery['bowler']]) {
+                bowlerData[delivery['bowler']]['total_runs'] +=
+                    parseInt(delivery['wide_runs']) +
+                    parseInt(delivery['noball_runs']) +
+                    parseInt(delivery['batsman_runs']);
+                bowlerData[delivery['bowler']]['total_bowls'] += 1;
             }
         }
     }
