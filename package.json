@@ -26,10 +26,11 @@
         "./src/**/*.js": [
             "eslint . --fix",
             "prettier --write .",
-            "jest --findRelatedTests"
+            "jest --findRelatedTests --passWithNoTests"
         ]
     },
     "dependencies": {
+        "cors": "^2.8.5",
         "csv-parser": "^3.0.0",
         "fast-csv": "^4.3.6"
     }
