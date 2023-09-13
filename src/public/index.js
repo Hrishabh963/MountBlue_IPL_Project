@@ -27,7 +27,7 @@ async function getMatchesPerYear() {
     const matchCount = array.map((matches) => matches.matches);
     await Highcharts.chart('matches_per_year', {
       chart: {
-        type: 'line',
+        type: 'bar',
       },
       title: {
         text: 'Matches per year',
