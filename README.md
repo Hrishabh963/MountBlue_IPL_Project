@@ -1,21 +1,18 @@
-
 # IPL Data Server
 
-A nodejs http server that reads the IPL  data and seperates it into different datasets
-
+A nodejs http server that reads the IPL data and seperates it into different datasets
 
 ## Installation and starting the data server
 
 Run the following commands in this order
 
 ```bash
-  npm install 
+  npm install
   node src/server/main.js
   nodemon src/server/ipl.js
 ```
 
 ## Starting the http server
-
 
 ```bash
   http-server src/public -p 5500
@@ -23,7 +20,4 @@ Run the following commands in this order
 
 ## Acknowledgements
 
- - [IPL Data](https://www.kaggle.com/manasgarg/ipl)
- 
- 
-
+- [IPL Data](https://www.kaggle.com/manasgarg/ipl)
