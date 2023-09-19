@@ -13,7 +13,8 @@ Run the following commands in this order
 ```
 
 ## Starting the http server
-## Open a new terminal and run 
+
+## Open a new terminal and run
 
 ```bash
   http-server src/public -p 5500
