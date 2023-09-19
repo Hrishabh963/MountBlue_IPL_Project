@@ -2,14 +2,16 @@ function tossWinMatchWinCount(matchData) {
   const tossWinMatchWin = {};
 
   //For each match,see if the toss winner and match winner is same
-  matchData.forEach((match) => {
-    const { season, toss_winner, winner } = match;
+  for (const match of matchData) {
+    const { toss_winner, winner } = match;
     if (toss_winner === winner) {
-      tossWinMatchWin[season] = tossWinMatchWin[season]
-        ? tossWinMatchWin[season] + 1
-        : 1;
+      if (!tossWinMatchWin[toss_winner]) {
+        tossWinMatchWin[toss_winner] = 1;
+      } else {
+        tossWinMatchWin[toss_winner] += 1;
+      }
     }
-  });
+  }
   return tossWinMatchWin;
 }
 

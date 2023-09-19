@@ -202,7 +202,7 @@ async function getTossWin() {
       xAxis: {
         categories: years,
         title: {
-          text: 'Year',
+          text: 'Team',
         },
       },
       yAxis: {
@@ -253,58 +253,54 @@ async function getExtraRunsPerTeam() {
 
 async function getPlayerOfMatchPerSeason() {
   const result = await fetch('http://localhost:3000/player_of_match');
-  const playerOfTheMatchData = await result.json();
-  const years = Object.keys(playerOfTheMatchData);
+  const data = await result.json();
 
   // Create an array of player names for each year
-  const playerNamesByYear = years.map((year) =>
-    playerOfTheMatchData[year].map((playerObj) => playerObj.player),
-  );
+  var years = Object.keys(data);
+  var playersData = {};
 
-  // Flatten the array of player names to a single array
-  const allPlayerNames = [].concat(...playerNamesByYear);
+  // Process the data to count player of the match awards for each player in each year
+  years.forEach(function (year) {
+    data[year].forEach(function (entry) {
+      var player = entry.player;
+      var playerOfTheMatchCount = entry.player_of_match;
 
-  // Create a set of unique player names
-  const uniquePlayerNames = [...new Set(allPlayerNames)];
+      if (!playersData[player]) {
+        playersData[player] = {};
+      }
 
-  // Count the occurrences of each player for each year
-  const playerCountsByYear = years.map((year) =>
-    uniquePlayerNames.map(
-      (playerName) =>
-        playerOfTheMatchData[year].filter(
-          (playerObj) => playerObj.player === playerName,
-        ).length,
-    ),
-  );
+      playersData[player][year] = playerOfTheMatchCount;
+    });
+  });
 
-  // Create the series data for Highcharts
-  const seriesData = uniquePlayerNames.map((playerName, index) => ({
-    name: playerName,
-    data: playerCountsByYear.map((counts) => counts[index] || 0),
-  }));
+  // Prepare data for Highcharts
+  var categories = Object.keys(playersData);
+  var seriesData = years.map(function (year) {
+    return {
+      name: year,
+      data: categories.map(function (player) {
+        return playersData[player][year] || 0;
+      }),
+    };
+  });
 
+  // Create the chart
   Highcharts.chart('player_of_match', {
     chart: {
       type: 'bar',
-      height: 400,
     },
     title: {
-      text: 'Player of the Match per Year',
+      text: 'Player of the Match Awards by Year',
     },
     xAxis: {
-      categories: years,
+      categories: categories,
       title: {
-        text: 'Year',
+        text: 'Players',
       },
     },
     yAxis: {
       title: {
-        text: 'Number of Times Player of the Match',
-      },
-    },
-    plotOptions: {
-      series: {
-        stacking: 'normal',
+        text: 'Number of Player of the Match Awards',
       },
     },
     series: seriesData,
